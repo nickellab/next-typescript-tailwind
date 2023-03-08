@@ -1,0 +1,32 @@
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - '$_DOCKER_PKG/$PROJECT_ID/$_REPO_NAME/$_IMAGE_NAME'
+      - '--build-arg'
+      - '_BACKEND_URL=${_BACKEND_URL}'
+      - '.'
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '$_DOCKER_PKG/$PROJECT_ID/$_REPO_NAME/$_IMAGE_NAME']
+  # Deploy container image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - $_SERVICE_NAME
+      - '--image'
+      - '$_DOCKER_PKG/$PROJECT_ID/$_REPO_NAME/$_IMAGE_NAME'
+      - '--region'
+      - '$_DEPLOY_REGION'
+
+substitutions:
+  _DEPLOY_REGION: asia-northeast1
+  _GCR_HOSTNAME: asia.gcr.io
+  _DOCKER_PKG: asia-northeast1-docker.pkg.dev
+
+images:
+  - '$_DOCKER_PKG/$PROJECT_ID/$_REPO_NAME/$_IMAGE_NAME'
