@@ -1,20 +1,20 @@
-import type { NextPage } from 'next'
-import type { AppProps } from 'next/app'
-import type { ReactElement, ReactNode } from 'react'
+import { Noto_Sans_JP } from 'next/font/google'
 import '../styles/globals.css'
 
-type NextPageWithLayout = NextPage & {
-  getLayout?: (page: ReactElement) => ReactNode
-}
-
-type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout
-}
+const notoSans = Noto_Sans_JP({
+  weight: ['400', '700'],
+  subsets: ['latin'],
+  variable: '--font-notosans',
+})
 
 const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   const getLayout = Component.getLayout ?? ((page) => page)
 
-  return getLayout(<Component {...pageProps} />)
+  return (
+    <div className={`${notoSans.variable} font-sans`}>
+      {getLayout(<Component {...pageProps} />)}
+    </div>
+  )
 }
 
 export default MyApp
