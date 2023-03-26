@@ -25,6 +25,11 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
+ARG _NEXT_PUBLIC_ENV1
+ARG _NEXT_PUBLIC_ENV2
+ENV NEXT_PUBLIC_ENV1 ${_NEXT_PUBLIC_ENV1}
+ENV NEXT_PUBLIC_ENV2 ${_NEXT_PUBLIC_ENV2}
+
 RUN yarn global add pnpm
 RUN pnpm run build
 

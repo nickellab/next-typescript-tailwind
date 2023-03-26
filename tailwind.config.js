@@ -7,14 +7,16 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-notosans)', ...fontFamily.sans],
+        sans: ['var(--font-montserrat)', 'var(--font-notosans)', ...fontFamily.sans],
+        noto: 'var(--font-notosans)',
+        montserrat: 'var(--font-montserrat)',
       },
     },
   },
   plugins: [
     plugin(function ({ addBase }) {
       addBase({
-        html: { fontSize: '14px' },
+        html: { fontSize: '16px' },
       })
     }),
   ],

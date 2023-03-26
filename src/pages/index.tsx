@@ -6,6 +6,9 @@ const Home: NextPageWithLayout = () => {
       <div className='mt-64 flex flex-col items-center text-white'>
         <h1 className='text-xl font-bold'>Nickel Lab. LLC.</h1>
         <sub className={`text-4xl`}>Next.js 13 Template</sub>
+        <sub className={`text-4xl`}>ABCDEあいうえお: Sans.</sub>
+        <sub className={`font-noto text-4xl`}>ABCDEあいうえお: Noto sans JP.</sub>
+        <sub className={`font-montserrat text-4xl`}>ABCDEあいうえお : Montserrat.</sub>
       </div>
     </div>
   )
