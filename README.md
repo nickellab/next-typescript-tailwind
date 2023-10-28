@@ -1,6 +1,6 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with Nickel Lab.
 
-Using Next.js 13 App Directory.
+Using Next.js 14 App Router.
 
 ## Getting Started
 
@@ -21,7 +21,7 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 - VSCode
 - Node.js v20
 - Typescript
-- Next.js 13
+- Next.js 14
   - Enable App directory
 - Twailwindcss
 - Eslint
