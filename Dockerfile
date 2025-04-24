@@ -1,4 +1,4 @@
-FROM node:18-alpine AS base
+FROM oven/bun:alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -7,11 +7,8 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
-COPY package.json pnpm-lock.yaml* ./
-RUN \
-  if [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i --frozen-lockfile; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
+COPY package.json bun.lock ./
+RUN bun i
 
 
 # Rebuild the source code only when needed
@@ -27,11 +24,10 @@ COPY . .
 
 ARG _NEXT_PUBLIC_ENV1
 ARG _NEXT_PUBLIC_ENV2
-ENV NEXT_PUBLIC_ENV1 ${_NEXT_PUBLIC_ENV1}
-ENV NEXT_PUBLIC_ENV2 ${_NEXT_PUBLIC_ENV2}
+ENV NEXT_PUBLIC_ENV1=${_NEXT_PUBLIC_ENV1}
+ENV NEXT_PUBLIC_ENV2=${_NEXT_PUBLIC_ENV2}
 
-RUN yarn global add pnpm
-RUN pnpm run build
+RUN bun run build
 
 # If using npm comment out above and use below instead
 # RUN npm run build
@@ -40,7 +36,7 @@ RUN pnpm run build
 FROM base AS runner
 WORKDIR /app
 
-ENV NODE_ENV production
+ENV NODE_ENV=production
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
@@ -58,6 +54,6 @@ USER nextjs
 
 EXPOSE 3000
 
-ENV PORT 3000
+ENV PORT=3000
 
-CMD ["node", "server.js"]
+CMD ["bun", "server.js"]
